@@ -75,15 +75,25 @@ public:
 
 
     void equal_begin_time(Courier& cour) {
+        std::vector<int> latest_time (num_of_offices, -1);
+        int new_time = 0;
+        int prev_time = 0;
         for (int i = 0; i < cour.get_num_of_let(); ++i) {
-            if (cour.first_let().get_end_of() == cour.last_let().get_end_of()) {
-                cour.first_let().set_t_begin(cour.last_let().get_t_begin());
-            }
-            else {
-                cour.first_let().set_t_begin(cour.last_let().get_t_end());
-                cour.first_let().set_t_end(ways[cour.last_let().get_end_of()][cour.first_let().get_end_of()] + (rand() % 36 - 5));
-            }
+            latest_time[cour.first_let().get_end_of()] = std::max(latest_time[cour.first_let().get_end_of()], cour.last_let().get_t_begin());
             cour.move_to_end();
+        }
+        for (int i = 0; i < num_of_offices; ++i) {
+            if (latest_time[i] > -1) {
+                new_time = std::max(latest_time[i], prev_time) + ways[cour.first_let().get_beg_of()][i] + (rand() % 36 - 5) ;
+                for (int j = 0; j < cour.get_num_of_let(); ++j) {
+                    if (cour.first_let().get_end_of() == i) {
+                        cour.first_let().set_t_begin(std::max(prev_time, latest_time[i]));
+                        cour.first_let().set_t_end(new_time);
+                    }
+                    cour.move_to_end();
+                }
+                prev_time = new_time;
+            }
         }
     }
 
