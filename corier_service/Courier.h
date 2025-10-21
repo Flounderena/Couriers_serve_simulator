@@ -9,70 +9,36 @@ class Courier
 {
 public:
 
-	Courier(int c, int p) : free(true), capacity(c), place(p), backpack(), history() {}
+	Courier(int c, int p);
 	~Courier() {}
 
-	void change_status(bool f) {
-		free = f;
-	}
+	void change_status(bool f);
 
-	bool is_free() {
-		return free;
-	}
+	bool is_free();
 
-	void set_pos(int p) {
-		place = p;
-	}
+	void set_pos(int p);
 
-	int num_of_letters() {
-		return backpack.size();
-	}
+	int num_of_letters();
 
-	void take_let(Letter l) {
-		backpack.push_back(l);
-		free = false;
-	}
+	void take_let(Letter l);
 
-	Letter first_let() {
-		return backpack.front();
-	}
+	Letter first_let();
 
-	Letter last_let() {
-		return backpack.back();
-	}
+	Letter last_let();
 
-	void deliver_let() {
-		if (backpack.front().get_order_time() > 0) {
-			history.push_back(backpack.front());
-		}
-		backpack.pop_front();
-		if (backpack.size() == 0) free = true;
-	}
+	void deliver_let();
 
-	void fr_ride(int t) {
-		free_rides += t;
-	}
+	void fr_ride(int t);
 
-	void ride(int t) {
-		rides += t;
-	}
+	void ride(int t);
 
-	int get_pos() {
-		return place;
-	}
+	int get_pos();
 
-	int get_free_space() {
-		return capacity - backpack.size();
-	}
+	int get_free_space();
 
-	int get_num_of_let() {
-		return backpack.size();
-	}
+	int get_num_of_let();
 
-	void move_to_end() {
-		backpack.push_back(backpack.front());
-		backpack.pop_front();
-	}
+	void move_to_end();
 
 private:
 	bool free;
