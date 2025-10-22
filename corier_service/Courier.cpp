@@ -1,6 +1,6 @@
 #include "Courier.h"
 
-Courier::Courier(int c, int p) : free(true), capacity(c), place(p), backpack(), history() {}
+Courier::Courier(int p) : free(true), place(p), backpack(), history() {}
 
 void Courier::change_status(bool f) {
 	free = f;
@@ -12,10 +12,6 @@ bool Courier::is_free() {
 
 void Courier::set_pos(int p) {
 	place = p;
-}
-
-int Courier::num_of_letters() {
-	return backpack.size();
 }
 
 void Courier::take_let(Letter l) {
@@ -35,24 +31,14 @@ void Courier::deliver_let() {
 	if (backpack.front().get_order_time() > 0) {
 		history.push_back(backpack.front());
 	}
+	++rides_num;
+	rides_time += backpack.front().get_t_end() - backpack.front().get_t_begin();
 	backpack.pop_front();
 	if (backpack.size() == 0) free = true;
 }
 
-void Courier::fr_ride(int t) {
-	free_rides += t;
-}
-
-void Courier::ride(int t) {
-	rides += t;
-}
-
 int Courier::get_pos() {
 	return place;
-}
-
-int Courier::get_free_space() {
-	return capacity - backpack.size();
 }
 
 int Courier::get_num_of_let() {
@@ -62,4 +48,23 @@ int Courier::get_num_of_let() {
 void Courier::move_to_end() {
 	backpack.push_back(backpack.front());
 	backpack.pop_front();
+}
+
+int Courier::get_mid_travels() {
+	return rides_time / rides_num;
+}
+
+std::pair<int, int> Courier::get_coordinates(std::pair<int, int> from, std::pair<int, int> to, int cur_time) {
+	std::pair<int, int> vec_coords = { to.first - from.first, to.second - from.second };
+	int delta_t = cur_time - backpack.front().get_t_begin();
+	int ride_t = backpack.front().get_t_end() - backpack.front().get_t_begin();
+	double part_of = delta_t / ride_t;
+	if (part_of >= 1) {
+		vec_coords = to;
+	}
+	else {
+		vec_coords.first *= part_of;
+		vec_coords.second *= part_of;
+	}
+	return vec_coords;
 }
