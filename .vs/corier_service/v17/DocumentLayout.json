@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Office.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Office.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Letter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Courier.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Courier.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Dispatcher.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Dispatcher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Letter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Dispatcher.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Courier.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Letter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Dispatcher.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Courier.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Office.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|solutionrelative:corier_service\\Office.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DAF68A2B-30A7-42DF-868D-98C11750EE0A}|corier_service\\corier_service.vcxproj|D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Office.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,42 +62,44 @@
               "RelativeToolTip": "corier_service\\Office.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-21T20:46:47.498Z"
+              "WhenOpened": "2025-10-21T20:46:47.498Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Office.h",
               "DocumentMoniker": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Office.h",
               "RelativeDocumentMoniker": "corier_service\\Office.h",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Office.h",
               "RelativeToolTip": "corier_service\\Office.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-21T20:46:45.966Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "Letter.cpp",
               "DocumentMoniker": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.cpp",
               "RelativeDocumentMoniker": "corier_service\\Letter.cpp",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.cpp",
               "RelativeToolTip": "corier_service\\Letter.cpp",
-              "ViewState": "AgIAABUAAAAAAAAAAAAQwCgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-21T20:46:48.845Z"
+              "WhenOpened": "2025-10-21T20:46:48.845Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Letter.h",
               "DocumentMoniker": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.h",
               "RelativeDocumentMoniker": "corier_service\\Letter.h",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Letter.h",
               "RelativeToolTip": "corier_service\\Letter.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-21T20:46:44.638Z",
               "EditorCaption": ""
@@ -110,20 +112,20 @@
               "RelativeDocumentMoniker": "corier_service\\Courier.h",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.h",
               "RelativeToolTip": "corier_service\\Courier.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-21T20:46:43.462Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Courier.cpp",
               "DocumentMoniker": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.cpp",
               "RelativeDocumentMoniker": "corier_service\\Courier.cpp",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Courier.cpp",
               "RelativeToolTip": "corier_service\\Courier.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-21T20:46:50.997Z",
               "EditorCaption": ""
@@ -136,22 +138,23 @@
               "RelativeDocumentMoniker": "corier_service\\Dispatcher.h",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.h",
               "RelativeToolTip": "corier_service\\Dispatcher.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACcAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-21T20:46:41.982Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "Dispatcher.cpp",
               "DocumentMoniker": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.cpp",
               "RelativeDocumentMoniker": "corier_service\\Dispatcher.cpp",
               "ToolTip": "D:\\2025-2026 \u0443\u0447\u0435\u0431\u043D\u044B\u0439 \u0433\u043E\u0434\\Couriers_serve_simulator\\corier_service\\Dispatcher.cpp",
               "RelativeToolTip": "corier_service\\Dispatcher.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAC8BAAAAAAAAAAAAAEUBAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-21T20:46:49.764Z"
+              "WhenOpened": "2025-10-21T20:46:49.764Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
