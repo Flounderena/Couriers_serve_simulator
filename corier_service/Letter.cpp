@@ -11,6 +11,10 @@ void Letter::set_t_end(int t) {
 	t_end = t;
 }
 
+void Letter::set_beg_of(int of) {
+	from_of =of;
+}
+
 int Letter::get_t_begin() {
 	return t_begin;
 }
@@ -37,12 +41,4 @@ int Letter::get_deadline() {
 
 int Letter::get_letter_num() {
 	return num_of_letter;
-}
-
-bool Letter::is_delievered() {
-	return delivered;
-}
-
-void Letter::get_delivered() {
-	delivered = true;
 }
