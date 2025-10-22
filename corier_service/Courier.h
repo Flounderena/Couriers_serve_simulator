@@ -9,40 +9,37 @@ class Courier
 {
 public:
 
-	Courier(int c, int p);
+	Courier(int p); // конструктор по 1 параметру: филлиал, в котором оказывается курьер в началае 1 дня
 	~Courier() {}
 
-	void change_status(bool f);
+	void change_status(bool f); // меняет статус курьера на f
 
-	bool is_free();
+	bool is_free(); // возвращает, свободен ли курьер
 
-	void set_pos(int p);
+	void set_pos(int p); // устанавливает, в каком филлиале курьер 
 
-	int num_of_letters();
+	void take_let(Letter l); // закидывает письмо в инвентарь
 
-	void take_let(Letter l);
+	Letter first_let(); // возвращает 1 письмо в инвентаре
 
-	Letter first_let();
+	Letter last_let(); // возвращает последнее письмо в инвентаре
 
-	Letter last_let();
+	void deliver_let(); // убирает письмо из инвентаря в историю доставленных писем
 
-	void deliver_let();
+	int get_pos(); // возвращает, в каком филлиале сейчас курьер
 
-	void fr_ride(int t);
+	int get_num_of_let();  // возвращает количество писем в инвентаре
 
-	void ride(int t);
+	void move_to_end(); // перемещает письмо в инвентаре из начала в конец очереди
 
-	int get_pos();
+	int get_mid_travels(); // возвращает среднее время поездок
 
-	int get_free_space();
+	std::pair<int, int> get_coordinates(std::pair<int, int> from, std::pair<int, int> to, int cur_time); // возвращает координаты курьера
 
-	int get_num_of_let();
-
-	void move_to_end();
 
 private:
 	bool free;
-	int capacity, place, free_rides, rides;
+	int place, rides_time, rides_num;
 	std::deque<Letter> backpack;
 	std::vector<Letter> history;
 };
