@@ -1,4 +1,8 @@
 #pragma once
+#include<queue>
+#include<deque>
+#include <algorithm>
+
 class Letter
 {
 public:
