@@ -1,3 +1,7 @@
+#pragma once
+#include "Letter.h"
+
+
 class Courier
 {
 public:
