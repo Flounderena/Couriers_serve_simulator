@@ -6,7 +6,7 @@
 #include <random>
 
 namespace {
-    constexpr int DAY_MIN = 9 * 60; 
+    constexpr int DAY_MIN = 9 * 60;
     inline int clamp_min(int v, int mn) { return v < mn ? mn : v; }
 }
 
@@ -24,7 +24,7 @@ Dispatcher::Dispatcher(int off, int cour, int st)
             if (i == j) { ways[i][j] = 0; continue; }
             double dist_units = offices[i].get_distance(offices[j]);
             const double km_per_unit = 0.25;
-            const double km_per_min = 0.5;  
+            const double km_per_min = 0.5;
             int mean_minutes = std::max(1, (int)std::lround((dist_units * km_per_unit) / km_per_min));
             ways[i][j] = ways[j][i] = mean_minutes;
         }
@@ -34,19 +34,19 @@ Dispatcher::Dispatcher(int off, int cour, int st)
 std::queue<Letter> Dispatcher::get_delivered_letters() { return letters_delivered; }
 std::queue<Letter> Dispatcher::get_ordered_letters() { return letters; }
 std::queue<Letter> Dispatcher::get_waiting_letters() { return wait_for_take; }
-int  Dispatcher::get_distance(int a, int b) { return ways[a][b]; }
-Office  Dispatcher::get_ofice(int n) { return offices[n]; }
+int Dispatcher::get_distance(int a, int b) { return ways[a][b]; }
+Office Dispatcher::get_ofice(int n) { return offices[n]; }
 Courier Dispatcher::get_courier(int n) { return couriers[n]; }
-int  Dispatcher::get_num_free_rides() { return num_free_rides; }
-int  Dispatcher::get_sum_of_deviations() { return sum_of_deviations; }
-int  Dispatcher::get_free_rides_time() { return free_rides_time; }
+int Dispatcher::get_num_free_rides() { return num_free_rides; }
+int Dispatcher::get_sum_of_deviations() { return sum_of_deviations; }
+int Dispatcher::get_free_rides_time() { return free_rides_time; }
 
 void Dispatcher::lett_deliver(Courier& cour, int t)
 {
     while (cour.get_num_of_let() != 0) {
         Letter f = cour.first_let();
         if (f.get_letter_num() == -1) break;
-        if (f.get_t_end() > t) break; 
+        if (f.get_t_end() > t) break;
 
         if (f.get_order_time() >= 0) {
             letters_delivered.push(f);
@@ -54,14 +54,6 @@ void Dispatcher::lett_deliver(Courier& cour, int t)
         }
         cour.set_pos(f.get_end_of());
         cour.deliver_let();
-    }
-
-    int cnt = cour.get_num_of_let();
-    for (int i = 0; i < cnt; ++i) {
-        Letter f = cour.first_let();
-        if (f.get_letter_num() == -1) break;
-        cour.first_let().set_beg_of(cour.get_pos());
-        cour.move_to_end();
     }
 }
 
@@ -152,7 +144,7 @@ void Dispatcher::programm_work()
 {
     const int num_of_periods = DAY_MIN / step;
 
-    int from = 0, to = 0, letter_office = 0;
+    int from = 0, to = 0;
     int cur_time = 0;
 
     std::vector<int> office_weights(num_of_offices);
@@ -198,46 +190,36 @@ void Dispatcher::programm_work()
             if (!wait_for_take.empty()) {
                 int wcnt = (int)wait_for_take.size();
                 for (int k = 0; k < wcnt; ++k) {
-                    if (wait_for_take.empty()) break;
                     Letter L = wait_for_take.front(); wait_for_take.pop();
-
                     int best = pick_best_free_courier_for_office(L.get_beg_of());
-                    if (best != -1) {
-                        assign_letter_to_courier(day, cur_time, L, best);
-                    }
-                    else {
-                        wait_for_take.push(L);
-                    }
+                    if (best != -1) assign_letter_to_courier(day, cur_time, L, best);
+                    else wait_for_take.push(L);
                 }
             }
 
             if (!letters.empty()) {
                 int lcnt = (int)letters.size();
                 for (int k = 0; k < lcnt; ++k) {
-                    if (letters.empty()) break;
                     Letter L = letters.front(); letters.pop();
-
                     int best = pick_best_free_courier_for_office(L.get_beg_of());
-                    if (best != -1) {
-                        assign_letter_to_courier(day, cur_time, L, best);
-                    }
-                    else {
-                        letters.push(L);
-                    }
+                    if (best != -1) assign_letter_to_courier(day, cur_time, L, best);
+                    else letters.push(L);
                 }
             }
 
             if (!letters.empty()) {
                 int probes = std::min<int>((int)letters.size(), num_of_couriers);
                 for (int p = 0; p < probes; ++p) {
-                    if (letters.empty()) break;
                     Letter L0 = letters.front(); letters.pop();
 
                     int exact = -1;
                     for (int i = 0; i < num_of_couriers; ++i) {
                         if (couriers[i].is_free() && couriers[i].get_pos() == L0.get_beg_of()) { exact = i; break; }
                     }
-                    if (exact != -1) { letters.push(L0); continue; }
+                    if (exact != -1) {
+                        assign_letter_to_courier(day, cur_time, L0, exact);
+                        continue;
+                    }
 
                     int best = pick_best_free_courier_for_office(L0.get_beg_of());
                     if (best != -1) {
@@ -247,13 +229,9 @@ void Dispatcher::programm_work()
                         wait_for_take.push(L0);
                         int cnt = (int)letters.size();
                         for (int i2 = 0; i2 < cnt; ++i2) {
-                            if (letters.empty()) break;
-                            if (letters.front().get_beg_of() == L0.get_beg_of()) {
-                                wait_for_take.push(letters.front()); letters.pop();
-                            }
-                            else {
-                                letters.push(letters.front()); letters.pop();
-                            }
+                            Letter tmp = letters.front(); letters.pop();
+                            if (tmp.get_beg_of() == L0.get_beg_of()) wait_for_take.push(tmp);
+                            else letters.push(tmp);
                         }
                     }
                     else {
@@ -264,15 +242,6 @@ void Dispatcher::programm_work()
         }
 
         for (int c = 0; c < num_of_couriers; ++c) lett_deliver(couriers[c], 600);
-
-        if (!wait_for_take.empty()) {
-            int cnt = (int)wait_for_take.size();
-            for (int i = 0; i < cnt; ++i) { wait_for_take.push(wait_for_take.front()); wait_for_take.pop(); }
-        }
-        if (!letters.empty()) {
-            int cnt = (int)letters.size();
-            for (int i = 0; i < cnt; ++i) { letters.push(letters.front()); letters.pop(); }
-        }
 
         std::cout << "THE END OF THE " << day << " DAY\n";
         std::cout.flush();
