@@ -1,5 +1,6 @@
 #include "Letter.h"
 
+
 Letter::Letter(int f, int s, int t, int l_t, int l_cnt) : from_of(f), to_of(s), order_time(t), deadline(l_t), delivered(false), t_begin(0), t_end(0), num_of_letter(l_cnt) {}
 
 
