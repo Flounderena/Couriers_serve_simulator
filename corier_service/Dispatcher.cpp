@@ -1,6 +1,8 @@
 #include "Dispatcher.h"
 
-Dispatcher::Dispatcher(int off, int cour, int st) : num_of_offices(off), num_of_couriers(cour), step(st), num_free_rides(0), sum_of_deviations(0), letters_cnt(0), free_rides_time(0) {
+Dispatcher::Dispatcher(int off, int cour, int st)
+    : num_of_offices(off), num_of_couriers(cour), step(st),
+    num_free_rides(0), sum_of_deviations(0), letters_cnt(0), free_rides_time(0) {
     ways.resize(num_of_offices, std::vector<int>(num_of_offices, 0));
     for (int i = 0; i < num_of_couriers; ++i) {
         Courier c((rand() % num_of_offices));
@@ -12,15 +14,18 @@ Dispatcher::Dispatcher(int off, int cour, int st) : num_of_offices(off), num_of_
     }
     for (int i = 0; i < num_of_offices; ++i) {
         for (int j = 0; j < num_of_offices; ++j) {
-            if (i != j && i) {
-                int l = (offices[i].get_distance(offices[j]));
-                ways[i][j] = l;
-                ways[j][i] = l;
+            if (i != j && i >= 0) {
+                // патч перевод Ђрассто€ни€ї в ћ»Ќ”“џ (ср. скорость ~30 км/ч)
+                double dist_units = offices[i].get_distance(offices[j]); // условные единицы
+                const double km_per_unit = 0.25; // калибровка сетки
+                const double km_per_min = 0.5;  // 30 км/ч
+                int mean_minutes = std::max(1, (int)std::lround((dist_units * km_per_unit) / km_per_min));
+                ways[i][j] = mean_minutes;
+                ways[j][i] = mean_minutes;
             }
         }
     }
 }
-
 
 std::queue<Letter> Dispatcher::get_delivered_letters() {
     return letters_delivered;
@@ -101,67 +106,75 @@ void Dispatcher::equal_begin_time(Courier& cour) {
 
 
 void Dispatcher::programm_work() {
-
     int num_of_periods = 9 * 60 / step;
     int num_of_letters = 0, from = 0, to = 0, letter_office = 0, time_of_ride = 0, min_time = -1, road_time = 0, sec_road_time = 0, delta = 0, target_of = 0, cur_time = 0;
     bool faster = false, all_are_busy = true, nobody_to_send = false;
     double letter_frequency = 0, frequency_coef = 0.5;
 
+    // PATCH: простые веса офисов дл€ неравномерности (чем индекс меньше Ч тем Ђт€желееї)
+    std::vector<int> office_weights(num_of_offices);
+    for (int i = 0; i < num_of_offices; ++i) office_weights[i] = 1 + (i % 3); // 1..3
+
+    auto weighted_office = [&]() {
+        int sum = 0;
+        for (int w : office_weights) sum += w;
+        int r = rand() % sum;
+        int acc = 0;
+        for (int i = 0; i < num_of_offices; ++i) {
+            acc += office_weights[i];
+            if (r < acc) return i;
+        }
+        return num_of_offices - 1;
+        };
+
     for (int day = 0; day < 7; ++day) {
-        //std::cout << "num_of_day " << day << std::endl;
         for (int period = 0; period <= num_of_periods; ++period) {
-            //std::cout << std::endl;
-            //std::cout << "num_of_period " << period << std::endl;
             cur_time = period * step;
-            //std::cout << "current_time " << cur_time << std::endl;
 
+            // PATCH: генераци€ за€вок через интервалы 2..20 мин в пределах окна периода
             if (period < num_of_periods) {
-                letter_frequency = frequency_coef / std::max(1, (abs(300 - cur_time) / 10));
-                num_of_letters = (step / 20) * (20 * letter_frequency);
+                int window_start = cur_time;
+                int window_end = std::min(540, cur_time + step);
 
-                std::vector<std::pair<int, int>> times(num_of_letters, { 0, 0 });
+                int t = window_start;
+                while (t < window_end) {
+                    // пик в середине дн€: чем ближе к 300, тем меньше интервал
+                    int dist_to_peak = std::abs(300 - t);
+                    double k = 1.0 / std::max(1, dist_to_peak / 30); // 1..~30 -> 1..~1
+                    // базовый интервал 2..20
+                    int gap = 2 + (rand() % 19);
+                    int adj_gap = std::max(1, (int)std::lround(gap / std::clamp(0.5 * k + 0.5, 0.5, 2.0)));
+                    t += adj_gap;
+                    if (t >= window_end) break;
 
-                for (int i = 0; i < num_of_letters; ++i) {
-                    from = rand() % (step - 1) + cur_time;
-                    to = std::min(540, rand() % std::max(1, (535 - from + 1)) + from);
-                    times[i] = { from, to };
-                }
-
-                std::sort(times.begin(), times.end());
-
-                for (int i = 0; i < num_of_letters; ++i) {
                     ++letters_cnt;
-                    from = rand() % num_of_offices;
-                    to = rand() % num_of_offices;
-                    if (to == from) {
-                        if (to + 1 < num_of_offices) ++to;
-                        else --to;
-                    }
-                    Letter l(from, to, times[i].first, times[i].second, letters_cnt);
+                    from = weighted_office();
+                    to = weighted_office();
+                    if (to == from) to = (to + 1) % num_of_offices;
+
+                    // дедлайн: в пределах дн€ Ч от 40 до 240 мин после заказа (но не позже 18:00)
+                    int deadline = std::min(540, t + (40 + (rand() % 201)));
+
+                    Letter l(from, to, t, deadline, letters_cnt);
                     letters.push(l);
                 }
             }
 
-            //std::cout << "extra_letters: " << std::endl;
+            // (остальной код блока Ч как у теб€; ниже Ч только патчи про шум времени)
+
             if (wait_for_take.size() > 0) {
                 for (int i = 0; i < wait_for_take.size(); ++i) {
-                    //std::cout << wait_for_take.front().get_order_time() << " " << wait_for_take.front().get_deadline() << " " << wait_for_take.front().get_beg_of() << " " << wait_for_take.front().get_end_of() << std::endl;
                     wait_for_take.push(wait_for_take.front());
                     wait_for_take.pop();
                 }
             }
-            //std::cout << std::endl;
 
-            //std::cout << "letters: " << std::endl;
             if (letters.size() > 0) {
                 for (int i = 0; i < letters.size(); ++i) {
-                    //std::cout << letters.front().get_order_time() << " " << letters.front().get_deadline() << " " << letters.front().get_beg_of() << " " << letters.front().get_end_of() << std::endl;
                     letters.push(letters.front());
                     letters.pop();
                 }
             }
-            //std::cout << std::endl;
-
 
             for (int c = 0; c < num_of_couriers; ++c) {
                 lett_deliver(couriers[c], cur_time);
@@ -169,20 +182,19 @@ void Dispatcher::programm_work() {
 
             if (wait_for_take.size() > 0) {
                 for (int i = 0; i < num_of_couriers && wait_for_take.size() > 0; ++i) {
-                    //std::cout << "take_all_letters" << std::endl;
                     if (couriers[i].is_free() && wait_for_take.size() > 0) {
                         min_time = -1;
-                        //std::cout << "free_courier " << i << std::endl;
                         for (int j = 0; j < wait_for_take.size(); ++j) {
                             letter_office = wait_for_take.front().get_beg_of();
 
                             if (couriers[i].get_pos() == letter_office && (min_time == -1 || min_time + 5 <= wait_for_take.front().get_order_time())) {
                                 if (min_time == -1) min_time = std::max(cur_time, wait_for_take.front().get_order_time());
                                 wait_for_take.front().set_t_begin(std::max(cur_time, wait_for_take.front().get_order_time()));
-                                time_of_ride = ways[wait_for_take.front().get_beg_of()][wait_for_take.front().get_end_of()] + (rand() % 36 - 5);
+                                // PATCH: шум добавл€етс€ к ¬–≈ћ≈Ќ» (ways Ч в минутах)
+                                delta = (rand() % 36) - 5; // [-5..30]
+                                time_of_ride = std::max(1, ways[wait_for_take.front().get_beg_of()][wait_for_take.front().get_end_of()] + delta);
                                 wait_for_take.front().set_t_end(std::max(cur_time, wait_for_take.front().get_t_begin()) + time_of_ride);
                                 couriers[i].take_let(wait_for_take.front());
-                                //std::cout << i << "  took the letter3" << std::endl;
                                 wait_for_take.pop();
                             }
                             else {
@@ -194,11 +206,12 @@ void Dispatcher::programm_work() {
                             letter_office = letters.front().get_beg_of();
                             if (couriers[i].get_pos() == letter_office && (min_time == -1 || min_time + 5 < letters.front().get_order_time())) {
                                 letters.front().set_t_begin(std::max(cur_time, letters.front().get_order_time()));
-                                time_of_ride = ways[letters.front().get_beg_of()][letters.front().get_end_of()] + (rand() % 36 - 5);
+                                // PATCH: шум к времени
+                                delta = (rand() % 36) - 5; // [-5..30]
+                                time_of_ride = std::max(1, ways[letters.front().get_beg_of()][letters.front().get_end_of()] + delta);
                                 letters.front().set_t_end(std::max(cur_time, letters.front().get_t_begin()) + time_of_ride);
                                 couriers[i].take_let(letters.front());
                                 nobody_to_send = false;
-                                //std::cout << i << "  took the letter1" << std::endl;
                                 letters.pop();
                             }
                             else {
@@ -216,21 +229,20 @@ void Dispatcher::programm_work() {
                 all_are_busy = false;
                 nobody_to_send = true;
                 for (int i = 0; i < num_of_couriers && letters.size() > 0; ++i) {
-                    //std::cout << "take_all_letters" << std::endl;
                     if (couriers[i].is_free()) {
                         all_are_busy = true;
                         min_time = -1;
-                        //std::cout << "free_courier " << i << std::endl;
                         for (int j = 0; j < letters.size(); ++j) {
                             letter_office = letters.front().get_beg_of();
                             if (couriers[i].get_pos() == letter_office && (min_time == -1 || min_time + 5 < letters.front().get_order_time())) {
                                 if (min_time == -1) min_time = std::max(cur_time, letters.front().get_order_time());
                                 letters.front().set_t_begin(std::max(cur_time, letters.front().get_order_time()));
-                                time_of_ride = ways[letters.front().get_beg_of()][letters.front().get_end_of()] + (rand() % 36 - 5);
+                                // PATCH: шум к времени
+                                delta = (rand() % 36) - 5;
+                                time_of_ride = std::max(1, ways[letters.front().get_beg_of()][letters.front().get_end_of()] + delta);
                                 letters.front().set_t_end(std::max(cur_time, letters.front().get_t_begin()) + time_of_ride);
                                 couriers[i].take_let(letters.front());
                                 nobody_to_send = false;
-                                //std::cout << i << "  took the letter1" << std::endl;
                                 letters.pop();
                             }
                             else {
@@ -246,37 +258,33 @@ void Dispatcher::programm_work() {
                             all_are_busy = true;
                             road_time = ways[couriers[i].get_pos()][letters.front().get_beg_of()];
                             delta = rand() % (36) - 5;
-                            faster = false;
+                            bool faster = false;
                             for (int k = 0; k < num_of_couriers; ++k) {
                                 if (i != k) {
                                     if (couriers[k].get_pos() == letters.front().get_beg_of() && couriers[k].is_free()) {
-                                        faster = true;
-                                        break;
+                                        faster = true; break;
                                     }
                                     sec_road_time = ways[couriers[k].get_pos()][letters.front().get_beg_of()];
                                     if (road_time > sec_road_time && couriers[k].is_free()) {
-                                        faster = true;
-                                        break;
+                                        faster = true; break;
                                     }
                                     if (couriers[k].get_num_of_let() > 0) {
                                         if (couriers[k].last_let().get_end_of() == letters.front().get_beg_of() && couriers[k].last_let().get_t_end() < cur_time + road_time + delta) {
-                                            faster = true;
-                                            break;
+                                            faster = true; break;
                                         }
                                     }
                                 }
                             }
                             if (!faster) {
                                 nobody_to_send = false;
-                                //std::cout << i << "  took the letter2" << std::endl;
                                 ++num_free_rides;
-                                free_rides_time += road_time + delta;
+                                free_rides_time += std::max(1, road_time + delta); // PATCH: не даЄм уйти в 0/отриц.
                                 Letter l(couriers[i].get_pos(), letters.front().get_beg_of(), -1, -1, -1);
                                 l.set_t_begin(cur_time);
-                                l.set_t_end(cur_time + road_time + delta);
+                                l.set_t_end(cur_time + std::max(1, road_time + delta));
                                 couriers[i].take_let(l);
                                 target_of = letters.front().get_beg_of();
-                                for (int i = 0; i < letters.size(); ++i) {
+                                for (int i2 = 0; i2 < letters.size(); ++i2) {
                                     if (letters.front().get_beg_of() == target_of) {
                                         wait_for_take.push(letters.front());
                                         letters.pop();
@@ -302,32 +310,31 @@ void Dispatcher::programm_work() {
             lett_deliver(couriers[c], 600);
         }
 
-
-        //std::cout << "extra_letters: " << std::endl;
         if (wait_for_take.size() > 0) {
             for (int i = 0; i < wait_for_take.size(); ++i) {
-                //std::cout << wait_for_take.front().get_order_time() << " " << wait_for_take.front().get_deadline() << " " << wait_for_take.front().get_beg_of() << " " << wait_for_take.front().get_end_of() << std::endl;
                 wait_for_take.push(wait_for_take.front());
                 wait_for_take.pop();
             }
         }
-        //std::cout << std::endl;
-        //std::cout << "letters: " << std::endl;
         if (letters.size() > 0) {
             for (int i = 0; i < letters.size(); ++i) {
-                //std::cout << letters.front().get_order_time() << " " << letters.front().get_deadline() << " " << letters.front().get_beg_of() << " " << letters.front().get_end_of() << std::endl;
                 letters.push(letters.front());
                 letters.pop();
             }
         }
-        //std::cout << std::endl;
         std::cout << "THE END OF THE " << day << " DAY" << std::endl;
-        //std::cout << std::endl;
-        //std::cout << std::endl;
     }
 
-    //for (int i = 0; i < num_of_couriers; ++i) {
-    //    std::cout << couriers[i].get_mid_travels() << std::endl;
-    //}
+    // PATCH: итогова€ статистика по “«
+    std::cout << "\n=== STATISTICS ===\n";
+    std::cout << "Free rides count: " << num_free_rides << "\n";
+    std::cout << "Free rides time (min): " << free_rides_time << "\n";
+    std::cout << "Sum lateness (min): " << sum_of_deviations << "\n";
 
+    for (int i = 0; i < num_of_couriers; ++i) {
+        std::cout << "Courier #" << i
+            << " busy_time(min): " << couriers[i].get_busy_time()
+            << " avg_trip(min): " << couriers[i].get_mid_travels()
+            << "\n";
+    }
 }
